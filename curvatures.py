@@ -29,20 +29,24 @@ def orc_edge(G,alpha,x,y,dist):
     W = ot.emd2(p_x, p_y, M)
     return 1-W
 
-def ollivier_curvature(G, alpha):
+def ollivier_curvature(G, alpha, double_edges=True):
     """Networkx implementation of alpha-Ollivier-Ricci curvature"""
     dist = dict(nx.all_pairs_shortest_path_length(G))
     curvature = {}
     for x,y in G.edges:
-        curvature[(x,y)] = curvature[(y,x)] = orc_edge(G,alpha,x,y,dist)
+        curvature[(x,y)] = round(orc_edge(G,alpha,x,y,dist),3)
+        if double_edges:
+            curvature[(x,y)] = curvature[(y,x)]
     
     return curvature
 
-def lly_curvature(G):
+def lly_curvature(G, double_edges=True):
     """Networkx implementation of Lin-Lu-Yau curvature"""
     dist = dict(nx.all_pairs_shortest_path_length(G))
     lly_curvature = {}
     for x,y in G.edges:
-        lly_curvature[(x,y)] = lly_curvature[(y,x)] = 2*orc_edge(G,1/2,x,y,dist)
+        lly_curvature[(x,y)] = round(2*orc_edge(G,1/2,x,y,dist),3)
+        if double_edges:
+            lly_curvature[(x,y)] = lly_curvature[(y,x)]
 
     return lly_curvature
