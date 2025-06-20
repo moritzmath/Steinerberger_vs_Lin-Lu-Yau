@@ -36,7 +36,7 @@ def ollivier_curvature(G, alpha, double_edges=True):
     for x,y in G.edges:
         curvature[(x,y)] = round(orc_edge(G,alpha,x,y,dist),3)
         if double_edges:
-            curvature[(x,y)] = curvature[(y,x)]
+            curvature[(y,x)] = curvature[(x,y)] 
     
     return curvature
 
@@ -47,6 +47,6 @@ def lly_curvature(G, double_edges=True):
     for x,y in G.edges:
         lly_curvature[(x,y)] = round(2*orc_edge(G,1/2,x,y,dist),3)
         if double_edges:
-            lly_curvature[(x,y)] = lly_curvature[(y,x)]
+            lly_curvature[(y,x)] = lly_curvature[(x,y)]
 
     return lly_curvature
